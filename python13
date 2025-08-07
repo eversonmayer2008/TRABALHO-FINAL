@@ -1,1 +1,47 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE plano_aula_tb (
+    plano_id INTEGER PRIMARY KEY,
+    turma_disciplina_id INTEGER,
+    data TEXT,
+    objetivos TEXT,
+    conteudo TEXT,
+    metodologia TEXT,
+    recursos TEXT
+)
+''')
+
+# Dados de exemplo
+cursor.execute('''
+INSERT INTO plano_aula_tb VALUES (
+    1, 
+    101, 
+    '2023-05-17', 
+    'Compreender equações lineares', 
+    'Equações de 1º grau', 
+    'Aula expositiva e exercícios', 
+    'Quadro, projetor, listas de exercícios'
+)
+''')
+
+cursor.execute('''
+INSERT INTO plano_aula_tb VALUES (
+    2, 
+    102, 
+    '2023-05-18', 
+    'Introdução à literatura brasileira', 
+    'Modernismo no Brasil', 
+    'Discussão em grupo e análise de textos', 
+    'Livros, textos impressos'
+)
+''')
+
+print("Planos de Aula:")
+for row in cursor.execute("SELECT * FROM plano_aula_tb"):
+    print(row)
+
+conn.close()
