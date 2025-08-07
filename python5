@@ -1,1 +1,21 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE professor_disciplina_tb (
+    professor_id TEXT,
+    disciplina_id TEXT
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO professor_disciplina_tb VALUES ('p1', 'd1')")
+cursor.execute("INSERT INTO professor_disciplina_tb VALUES ('p2', 'd2')")
+
+print("Professor-Disciplina:")
+for row in cursor.execute("SELECT * FROM professor_disciplina_tb"):
+    print(row)
+
+conn.close()
