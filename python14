@@ -1,1 +1,26 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE notas_tb (
+    nota_id INTEGER PRIMARY KEY,
+    atividade_id INTEGER,
+    aluno_id INTEGER,
+    valor REAL,
+    observacoes TEXT,
+    data_registro TEXT
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO notas_tb VALUES (1, 1, 101, 8.5, 'Bom desempenho', '2023-05-15 14:30:00')")
+cursor.execute("INSERT INTO notas_tb VALUES (2, 1, 102, 7.0, 'Precisa melhorar', '2023-05-15 14:35:00')")
+cursor.execute("INSERT INTO notas_tb VALUES (3, 2, 101, 9.0, 'Excelente trabalho', '2023-05-20 10:15:00')")
+
+print("Notas:")
+for row in cursor.execute("SELECT * FROM notas_tb"):
+    print(row)
+
+conn.close()
