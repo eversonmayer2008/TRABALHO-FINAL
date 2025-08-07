@@ -1,1 +1,26 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE comunicados_tb (
+    comunicado_id INTEGER PRIMARY KEY,
+    professor_id INTEGER,
+    turma_id INTEGER,
+    titulo TEXT,
+    mensagem TEXT,
+    data_envio TEXT,
+    prioridade TEXT CHECK(prioridade IN ('alta', 'media', 'baixa'))
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO comunicados_tb VALUES (1, 1, 1, 'Reunião de pais', 'Dia 20/06 às 19h', '2023-05-10 09:00', 'alta')")
+cursor.execute("INSERT INTO comunicados_tb VALUES (2, 2, 2, 'Feriado', 'Não haverá aula dia 15/06', '2023-05-05 10:30', 'media')")
+
+print("Comunicados:")
+for row in cursor.execute("SELECT * FROM comunicados_tb"):
+    print(row)
+
+conn.close()
