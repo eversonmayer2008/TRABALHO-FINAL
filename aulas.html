@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário Digital - Aulas Hoje</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            /* Cores primárias (acessíveis) */
+            --primary-color: #3a7bd5;
+            --primary-dark: #2c5fb3;
+            --primary-light: #5c9aff;
+           
+            /* Cores neutras */
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --black: #000000;
+           
+            /* Cores de feedback */
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+           
+            /* Espaçamentos */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+           
+            /* Bordas */
+            --border-radius: 0.25rem;
+            --border-radius-lg: 0.5rem;
+           
+            /* Sombras */
+            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+           
+            /* Tamanhos de fonte */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            --font-size-xxl: 2rem;
+        }
+
+        /* Tema escuro */
+        [data-theme="dark"] {
+            --primary-color: #5c9aff;
+            --primary-dark: #3a7bd5;
+            --primary-light: #7eb1ff;
+           
+            --white: #212529;
+            --gray-100: #343a40;
+            --gray-200: #495057;
+            --gray-300: #6c757d;
+            --gray-400: #adb5bd;
+            --gray-500: #ced4da;
+            --gray-600: #dee2e6;
+            --gray-700: #e9ecef;
+            --gray-800: #f8f9fa;
+            --gray-900: #ffffff;
+            --black: #f8f9fa;
+        }
+
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background-color: var(--gray-100);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Barra de navegação */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .navbar-brand i {
+            font-size: var(--font-size-xl);
+        }
+
+        .navbar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: var(--font-size-lg);
+            cursor: pointer;
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+        }
+
+        .navbar-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            transition: background-color 0.2s;
+        }
+
+        .navbar-links a:hover, .navbar-links a:focus {
+            background-color: var(--primary-dark);
+            outline: none;
+        }
+
+        .navbar-links a[aria-current="page"] {
+            background-color: var(--primary-dark);
+            font-weight: bold;
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            flex: 1;
+            padding: var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Estilos específicos para a página de aulas hoje */
+        .classes-today {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+       
+        .class-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            transition: all 0.2s ease;
+        }
+       
+        .class-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+       
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+       
+        .class-time {
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: var(--gray-100);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+        }
+       
+        .class-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+       
+        .status-planned {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+       
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+       
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+       
+        .class-details {
+            margin-bottom: var(--spacing-md);
+        }
+       
+        .class-title {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-xs);
+            color: var(--gray-800);
+        }
+       
+        .class-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+       
+        .class-info-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--gray-600);
+        }
+       
+        .class-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        }
+       
+        .no-classes {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            color: var(--gray-500);
+        }
+       
+        .day-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+       
+        .current-date {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+        }
+
+        /* Botões */
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--primary-light);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray-300);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal[aria-hidden="false"] {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Toast de feedback */
+        .toast {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-content {
+            background-color: var(--gray-800);
+            color: var(--white);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: var(--spacing-md);
+            background-color: var(--gray-200);
+            color: var(--gray-700);
+            margin-top: auto;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                padding: var(--spacing-xl) var(--spacing-lg);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 100;
+            }
+
+            .navbar-links[aria-expanded="true"] {
+                transform: translateX(0);
+            }
+
+            .navbar-toggle {
+                display: block;
+                z-index: 101;
+            }
+
+            .class-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+
+            .class-name {
+                margin: var(--spacing-sm) 0;
+            }
+
+            .class-info {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .class-actions {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .day-navigation {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra de navegação acessível -->
+        <nav class="navbar" aria-label="Navegação principal">
+            <div class="navbar-brand">
+                <i class="fas fa-book-open"></i>
+                <h1>Diário Digital</h1>
+            </div>
+            <button class="navbar-toggle" aria-expanded="false" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="navbar-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#turmas"><i class="fas fa-users"></i> Turmas</a></li>
+                <li><a href="aulas-hoje.html" aria-current="page"><i class="fas fa-chalkboard-teacher"></i> Aulas</a></li>
+                <li><a href="#avaliacoes"><i class="fas fa-clipboard-check"></i> Avaliações</a></li>
+                <li><a href="#relatorios"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
+                <li><button id="theme-toggle" aria-label="Alternar tema"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </nav>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+            <section id="aulas-hoje">
+                <h2><i class="fas fa-calendar-day"></i> Aulas Hoje</h2>
+               
+                <div class="day-navigation">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-chevron-left"></i> Dia anterior
+                    </button>
+                    <div class="current-date"></div>
+                    <button class="btn btn-secondary">
+                        Próximo dia <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+               
+                <div class="classes-today">
+                    <h3>Manhã</h3>
+                   
+                    <div class="class-card">
+                        <div class="class-header">
+                            <span class="class-time">08:00 - 09:30</span>
+                            <span class="class-status status-planned">Planejada</span>
+                        </div>
+                        <div class="class-details">
+                            <h4 class="class-title">Matemática - Álgebra Linear</h4>
+                            <div class="class-info">
+                                <span class="class-info-item">
+                                    <i class="fas fa-users"></i> 9º Ano A
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-door-open"></i> Sala 12
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-sticky-note"></i> Tópico: Equações do 2º grau
+                                </span>
+                            </div>
+                        </div>
+                        <div class="class-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i> Iniciar Aula
+                            </button>
+                        </div>
+                    </div>
+                   
+                    <div class="class-card">
+                        <div class="class-header">
+                            <span class="class-time">10:00 - 11:30</span>
+                            <span class="class-status status-completed">Concluída</span>
+                        </div>
+                        <div class="class-details">
+                            <h4 class="class-title">Matemática - Geometria</h4>
+                            <div class="class-info">
+                                <span class="class-info-item">
+                                    <i class="fas fa-users"></i> 8º Ano B
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-door-open"></i> Sala 15
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-sticky-note"></i> Tópico: Teorema de Pitágoras
+                                </span>
+                            </div>
+                            <div class="class-info">
+                                <span class="class-info-item">
+                                    <i class="fas fa-check-circle"></i> Presenças registradas
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-clipboard-list"></i> Atividade aplicada
+                                </span>
+                            </div>
+                        </div>
+                        <div class="class-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-eye"></i> Ver Detalhes
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Registrar Conteúdo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="classes-today">
+                    <h3>Tarde</h3>
+                   
+                    <div class="class-card">
+                        <div class="class-header">
+                            <span class="class-time">14:00 - 15:30</span>
+                            <span class="class-status status-cancelled">Cancelada</span>
+                        </div>
+                        <div class="class-details">
+                            <h4 class="class-title">Matemática - Apoio</h4>
+                            <div class="class-info">
+                                <span class="class-info-item">
+                                    <i class="fas fa-users"></i> 7º Ano C
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-door-open"></i> Sala 10
+                                </span>
+                                <span class="class-info-item">
+                                    <i class="fas fa-sticky-note"></i> Tópico: Revisão para prova
+                                </span>
+                            </div>
+                            <div class="class-info">
+                                <span class="class-info-item">
+                                    <i class="fas fa-info-circle"></i> Cancelada: Feriado municipal
+                                </span>
+                            </div>
+                        </div>
+                        <div class="class-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Reagendar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="classes-today">
+                    <h3>Noite</h3>
+                   
+                    <div class="no-classes">
+                        <i class="fas fa-calendar-check" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <p>Nenhuma aula programada para este período</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Rodapé -->
+        <footer class="footer">
+            <p>Diário Digital &copy; 2023 - Todos os direitos reservados</p>
+            <p>Acessibilidade garantida</p>
+        </footer>
+    </div>
+
+    <!-- Modal de confirmação (oculto por padrão) -->
+    <div class="modal" id="confirmation-modal" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirmar ação</h3>
+            <p id="modal-message">Tem certeza que deseja realizar esta ação?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                <button class="btn btn-danger" id="modal-confirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de feedback (toast) -->
+    <div class="toast" id="feedback-toast" aria-live="polite" aria-atomic="true">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Controle do tema claro/escuro
+            const themeToggle = document.getElementById('theme-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+           
+            // Verificar preferência do sistema ou tema salvo
+            const currentTheme = localStorage.getItem('theme') ||
+                                (prefersDarkScheme.matches ? 'dark' : 'light');
+           
+            if (currentTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.setAttribute('aria-label', 'Alternar para tema claro');
+            }
+           
+            themeToggle.addEventListener('click', function() {
+                let theme;
+                if (document.body.getAttribute('data-theme') === 'dark') {
+                    document.body.removeAttribute('data-theme');
+                    theme = 'light';
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    themeToggle.setAttribute('aria-label', 'Alternar para tema escuro');
+                } else {
+                    document.body.setAttribute('data-theme', 'dark');
+                    theme = 'dark';
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.setAttribute('aria-label', 'Alternar para tema claro');
+                }
+                localStorage.setItem('theme', theme);
+            });
+           
+            // Controle do menu mobile
+            const navbarToggle = document.querySelector('.navbar-toggle');
+            const navbarLinks = document.querySelector('.navbar-links');
+           
+            navbarToggle.addEventListener('click', function() {
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !expanded);
+                navbarLinks.setAttribute('aria-expanded', !expanded);
+            });
+           
+            // Fechar menu ao clicar em um link
+            navbarLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navbarToggle.setAttribute('aria-expanded', 'false');
+                        navbarLinks.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+           
+            // Sistema de confirmação para ações críticas
+            document.querySelectorAll('[data-confirm]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modal = document.getElementById('confirmation-modal');
+                    const modalTitle = document.getElementById('modal-title');
+                    const modalMessage = document.getElementById('modal-message');
+                    const modalConfirm = document.getElementById('modal-confirm');
+                   
+                    modalTitle.textContent = this.getAttribute('data-confirm-title') || 'Confirmar ação';
+                    modalMessage.textContent = this.getAttribute('data-confirm-message') || 'Tem certeza que deseja realizar esta ação?';
+                   
+                    modal.setAttribute('aria-hidden', 'false');
+                   
+                    // Armazenar a ação original
+                    const originalAction = this.getAttribute('data-action') || this.onclick;
+                   
+                    modalConfirm.onclick = function() {
+                        if (typeof originalAction === 'function') {
+                            originalAction();
+                        } else if (originalAction) {
+                            eval(originalAction);
+                        }
+                        modal.setAttribute('aria-hidden', 'true');
+                        showFeedback('Ação realizada com sucesso!', 'success');
+                    };
+                   
+                    document.getElementById('modal-cancel').onclick = function() {
+                        modal.setAttribute('aria-hidden', 'true');
+                    };
+                });
+            });
+           
+            // Sistema de feedback
+            function showFeedback(message, type = 'info') {
+                const toast = document.getElementById('feedback-toast');
+                const toastMessage = document.getElementById('toast-message');
+               
+                toastMessage.textContent = message;
+                toast.className = 'toast show';
+               
+                // Estilo baseado no tipo
+                const toastContent = toast.querySelector('.toast-content');
+                toastContent.style.backgroundColor = getFeedbackColor(type);
+               
+                // Esconder após 5 segundos
+                setTimeout(() => {
+                    toast.className = 'toast';
+                }, 5000);
+            }
+           
+            function getFeedbackColor(type) {
+                switch(type) {
+                    case 'success': return 'var(--success-color)';
+                    case 'warning': return 'var(--warning-color)';
+                    case 'danger': return 'var(--danger-color)';
+                    default: return 'var(--info-color)';
+                }
+            }
+           
+            // Configurar data atual
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.querySelector('.current-date').textContent = today.toLocaleDateString('pt-BR', options);
+           
+            // Navegação entre dias
+            document.querySelectorAll('.day-navigation button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentDateElement = document.querySelector('.current-date');
+                    const currentDate = new Date(currentDateElement.dataset.date || new Date());
+                   
+                    if (this.textContent.includes('anterior')) {
+                        currentDate.setDate(currentDate.getDate() - 1);
+                    } else {
+                        currentDate.setDate(currentDate.getDate() + 1);
+                    }
+                   
+                    currentDateElement.textContent = currentDate.toLocaleDateString('pt-BR', options);
+                    currentDateElement.dataset.date = currentDate.toISOString();
+                   
+                    showFeedback(`Mostrando aulas para ${currentDateElement.textContent}`, 'info');
+                });
+            });
+           
+            // Ação de iniciar aula
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                if (btn.textContent.includes('Iniciar Aula')) {
+                    btn.addEventListener('click', function() {
+                        showFeedback('Aula iniciada com sucesso!', 'success');
+                        // Simular mudança de status
+                        const card = this.closest('.class-card');
+                        const status = card.querySelector('.class-status');
+                        status.textContent = 'Em andamento';
+                        status.className = 'class-status status-completed';
+                        this.innerHTML = '<i class="fas fa-check"></i> Finalizar Aula';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
