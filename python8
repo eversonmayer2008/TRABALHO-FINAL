@@ -1,1 +1,26 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE atividades_tb (
+    atividade_id INTEGER PRIMARY KEY,
+    turma_disciplina_id INTEGER,
+    titulo TEXT,
+    descricao TEXT,
+    data_entrega TEXT,
+    valor REAL,
+    tipo TEXT CHECK(tipo IN ('prova', 'trabalho', 'exercicio'))
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO atividades_tb VALUES (1, 1, 'Prova 1', 'Prova sobre capítulos 1-3', '2023-06-15', 10.0, 'prova')")
+cursor.execute("INSERT INTO atividades_tb VALUES (2, 1, 'Trabalho em grupo', 'Pesquisa sobre história', '2023-06-20', 5.0, 'trabalho')")
+
+print("Atividades:")
+for row in cursor.execute("SELECT * FROM atividades_tb"):
+    print(row)
+
+conn.close()
