@@ -1,1 +1,25 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE frequencia_tb (
+    frequencia_id INTEGER PRIMARY KEY,
+    aula_id INTEGER,
+    aluno_id INTEGER,
+    presenca TEXT CHECK(presenca IN ('presente', 'ausente', 'justificado')),
+    justificativa TEXT,
+    data_registro TEXT
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO frequencia_tb VALUES (1, 101, 1, 'presente', NULL, '2023-05-01 08:00')")
+cursor.execute("INSERT INTO frequencia_tb VALUES (2, 101, 2, 'ausente', 'Doente', '2023-05-01 08:00')")
+
+print("Frequência:")
+for row in cursor.execute("SELECT * FROM frequencia_tb"):
+    print(row)
+
+conn.close()
