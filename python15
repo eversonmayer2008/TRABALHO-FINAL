@@ -1,1 +1,27 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+# Criar tabela de turmas
+cursor.execute('''
+CREATE TABLE turmas_tb (
+    turma_id INTEGER PRIMARY KEY,
+    nome TEXT,
+    ano_letivo TEXT,
+    periodo TEXT CHECK(periodo IN ('matutino', 'vespertino', 'noturno')),
+    sala TEXT,
+    capacidade INTEGER
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO turmas_tb VALUES (1, '3º Ano A', '2023', 'matutino', 'Sala 12', 30)")
+cursor.execute("INSERT INTO turmas_tb VALUES (2, '2º Ano B', '2023', 'vespertino', 'Sala 8', 25)")
+cursor.execute("INSERT INTO turmas_tb VALUES (3, '1º Ano C', '2023', 'noturno', 'Sala 5', 20)")
+
+print("Turmas cadastradas:")
+for row in cursor.execute("SELECT * FROM turmas_tb"):
+    print(row)
+
+conn.close()
