@@ -1,1 +1,26 @@
+import sqlite3
 
+conn = sqlite3.connect(':memory:')
+cursor = conn.cursor()
+
+cursor.execute('''
+CREATE TABLE materiais_tb (
+    material_id INTEGER PRIMARY KEY,
+    turma_disciplina_id INTEGER,
+    titulo TEXT,
+    descricao TEXT,
+    arquivo TEXT,
+    data_upload TEXT,
+    tipo TEXT CHECK(tipo IN ('apostila', 'slide', 'video', 'exercicio'))
+)
+''')
+
+# Dados de exemplo
+cursor.execute("INSERT INTO materiais_tb VALUES (1, 1, 'Apostila 1', 'Introdução ao conteúdo', 'apostila1.pdf', '2023-05-01 10:00', 'apostila')")
+cursor.execute("INSERT INTO materiais_tb VALUES (2, 2, 'Vídeo aula', 'Explicação do conteúdo', 'video1.mp4', '2023-05-02 14:30', 'video')")
+
+print("Materiais:")
+for row in cursor.execute("SELECT * FROM materiais_tb"):
+    print(row)
+
+conn.close()
